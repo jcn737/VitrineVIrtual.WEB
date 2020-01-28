@@ -1,0 +1,131 @@
+﻿@using VitrineVirtual.Model
+@using VitrineVirtual.WEB.Controllers
+@model IEnumerable<VitrineVirtual.Model.Cadastro_Produto_Loja>
+
+@{
+    ViewBag.Title = "Catalogo de Produtos";
+}
+
+<h2>Moda Feminina</h2>
+
+
+<div class="row wrapper wrapper-content border-bottom white-bg">
+    <div class="animated fadeInRight">
+        <div class="col-sm-12">
+            <div class="form-group">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 form-group">
+                        <div class="ibox-block">
+                            <div class="ibox-block-content product-box">
+                                <div class="product-imitation" style="background-size: 250px 210px">
+                                    @{
+                                        ((CadastroProdutoLojaController)this.ViewContext.Controller).GetImage(item.ID_Cadastro_Prod_Loja);
+                                        var cadProd = (Cadastro_Produto_Loja)Session["Foto"];
+
+                                        if (Session["caminho_1"] != null)
+                                        {
+                                            var caminhoFoto1 = (FilePath)Session["caminho_1"];
+
+                                            <a href="#" title="Foto 1">
+                                                <img style="position:initial" width="240" height="200" src="@Url.Content(caminhoFoto1.Caminho_Arquivo)" />
+                                            </a>
+                                        }
+                                    }
+                                </div>
+                                <div class="product-desc">
+                                    <span class="product-price" style="background-color: #3872a2">
+                                        @Html.DisplayFor(modelItem => item.Preco_Produto)
+                                    </span>
+                                    <small class="product-name">
+                                        @Html.DisplayFor(modelItem => item.Nome_Produto)
+                                    </small>
+                                    <a class="text-muted">
+                                        @Html.DisplayFor(modelItem => item.Modelo_Produto)
+                                    </a>
+                                    <small class="text-muted">
+                                        @Html.DisplayFor(modelItem => item.Descricao_Produto)
+                                    </small>
+                                    <div class="small m-t-xs">
+                                        @Html.DisplayFor(modelItem => item.Quantidade_Produto)
+                                    </div>
+                                    <div class="small m-t-xs">
+                                        @Html.DisplayFor(modelItem => item.Status_Produto)
+                                    </div>
+                                    <div class="m-t text-righ">
+                                        <a class="btn btn-xs btn-outline btn-info" href="@Url.Action("Details", "CadastroProdutoLoja", new { id = item.ID_Cadastro_Prod_Loja })">Info<i class="fa fa-long-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/codeEditorStyles")
+    @Styles.Render("~/plugins/jquery-ui/jqueryuiStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/sweetAlert")
+    @Scripts.Render("~/plugins/unobtrusive")
+    @Scripts.Render("~/plugins/unobtrusiveMin")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/inspinia")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/plugins/jqueryui")
+
+    <script type="text/javascript">
+
+        AddAntiForgeryToken = function (data) {
+            data.__RequestVerificationToken = $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
+            return data;
+        };
+
+        function SucessoPagamento(id) {
+            swal({
+                title: "Pagamento Efetuado",
+                text: "Seu pagamento foi realizado com sucesso!",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Efetuado!", "Seu pagamento foi realizado com sucesso.", "success");
+                    };
+                });
+        }
+
+        function FalhaPagamento(id) {
+            swal({
+                title: "Pagamento Não Efetuado",
+                text: "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Não Efetuado!", "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!", "error");
+                    };
+                });
+        }
+
+    </script>
+}
+

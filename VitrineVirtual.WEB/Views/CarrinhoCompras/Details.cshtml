@@ -1,0 +1,315 @@
+﻿
+@using VitrineVirtual.Model
+@using VitrineVirtual.WEB.Controllers
+@model IList<VitrineVirtual.Model.Carrinho_Compras>
+
+@{
+    ViewBag.Title = "CarregaCarrinhoItens";
+}
+
+<h2>Mala de Itens</h2>
+
+@Html.ActionLink("Continuar Comprando", "Index", "Home", null, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+<br>
+<br>
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="ibox">
+            <div class="ibox-title">
+                <span class="pull-right">(<strong>@ViewData["Qtd_Itens"].ToString()</strong>) produtos</span>
+                <h5>Quantidade itens na mala</h5>
+            </div>
+            <div class="ibox-content">
+
+                <div class="table-responsive">
+                    <table class="table shoping-cart-table">
+                        <tbody>
+                            @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td width="120">
+                                            <div class="cart-product-imitation">
+                                                <a href="#" title="Foto">
+                                                    <img style="position:initial" width="90" height="90" src="@Url.Content(item.Caminho_Arquivo)" />
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="desc">
+                                            <h3>
+                                                <a href="#" class="text-navy">
+                                                    @*<input type="text" id="nomeProduto" name="preco" class="form-control" value="@item.Nome_Produto">*@
+                                                    @Html.DisplayFor(modelItem => item.Nome_Produto)
+                                                </a>
+                                            </h3>
+                                            <h4>
+                                                <a href="#" class="text-navy">
+                                                    @*<input type="text" id="modeloProduto" name="preco" class="form-control" value="@item.Modelo_Produto">*@
+                                                    @Html.DisplayFor(modelItem => item.Modelo_Produto)
+                                                </a>
+                                            </h4>
+                                            <p class="small">
+                                                @*<input type="text" id="descricaoProduto" name="preco" class="form-control" value="@item.Descricao_Produto">*@
+                                                @Html.DisplayFor(modelItem => item.Descricao_Produto)
+                                            </p>
+                                            <h3 class="small m-b-none">
+                                                @*<input type="text" id="precoProduto" class="form-control" value="@item.Preco_Produto">*@
+                                                @Html.DisplayFor(modelItem => item.Preco_Produto))
+                                            </h3>
+                                        </td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-sm-3 pull-left">
+                                                    <input type="text" id="txtAtualizaPreco" name="preco" class="form-control">
+                                                    <input type="hidden" name="preco" id="hdnAtualizaPreco" value="@item.Preco_Produto" />
+                                                    @*@Html.TextBoxQtd(Request.Form["QtdProduto"], new { value = item.Preco_Produto }, new { @id = "QtdProduto", @class = "form-control", @type = "number", @text = "1" })*@
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="button" id="btnAtualizaPreco" value="Calcular" class="form-control text-white" style="background-color: #3872a2">
+                                                    @*@Html.ActionLink("Atualiza Valor", "AtualizaPreco", "CarrinhoCompras", new { quantidade = Request.Form["QtdProduto"] }, new { @class = "btn btn-info" })*@
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td width="40">
+                                            <div class="m-t-sm">
+                                                <button id="btnExcuiItemcarrinho" class="btn-danger btn btn-xs apaga" value="Excuir"><i class="fa fa-trash"></i></button>
+                                                <input type="hidden" name="itemCarrinho" id="hdnExcluiItemCarrinho" value="@item.ID_Carrinho_Compras" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="ibox">
+            <div class="ibox-title">
+                Pagamento
+            </div>
+            <div class="ibox-content">
+                <span>
+                    Total
+                </span>
+                <h2 class="font-bold">
+                    @{
+                        <input type="text" id="hdlTotal" value="R$ @ViewData["Total"]">
+                    }
+                </h2>
+                <hr />
+                <div class="m-t-sm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div id="paypal-button-container"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <label class="col-sm-2 control-label">CEP:</label>
+                    <div class="col-sm-5">
+                        <input type="text" id="txtCEP" class="form-control">
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="button" id="btnCEP" value="Calcular" class="form-control text-white" style="background-color: #3872a2">
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-2">
+                        <span>
+                            Com Frete
+                        </span>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" readonly="" id="txtTotalFrete" value="R$ @ViewData["Total_Frete"].ToString()" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/codeEditorStyles")
+    @Styles.Render("~/plugins/jquery-ui/jqueryuiStyles")
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/sweetAlert")
+    @Scripts.Render("~/plugins/unobtrusive")
+    @Scripts.Render("~/plugins/unobtrusiveMin")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/inspinia")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/plugins/jqueryui")
+
+
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=BRL"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=SB_CLIENT_ID"></script>
+
+    <script type="text/javascript">
+
+        var total = @ViewData["Total"];
+        console.warn(total);
+        paypal.Buttons(
+            {
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: total,
+                                currency: 'BRL',
+                                total: '20.00'
+                            }
+                        }]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        alert('Transação realizada por:  ' + details.payer.name.given_name);
+                        // Call your server to save the transaction
+                        return fetch('/paypal-transaction-complete', {
+                            method: 'post',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                orderID: data.orderID
+                            })
+                        });
+                    });
+                }
+            }).render('#paypal-button-container');
+    </script>
+
+    <script type="text/javascript">
+
+    </script>
+
+    <script type="text/javascript">
+
+        AddAntiForgeryToken = function (data) {
+            data.__RequestVerificationToken = $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
+            return data;
+        };
+
+        $('#btnCEP').click(function () {
+            console.warn('Entrou calcular Frete');
+            var cep = $("#txtCEP").val();
+            var total = @ViewData["Total"].ToString();
+            console.warn(cep);
+            console.warn(total);
+            $.post('@Url.Action("CalculaFrete", "CarrinhoCompras")', AddAntiForgeryToken({ cep: cep, preco: total }))
+            .done(function(data){
+                console.warn(data);
+            });
+        });
+
+        $('#btnAtualizaPreco').click(function () {
+            console.warn('Entrou calcular');
+            var quantidade = $("#txtAtualizaPreco").val().toString();
+            var preco = $("#hdnAtualizaPreco").val().toString();
+            console.warn(quantidade);
+            console.warn(preco);
+            $.post('@Url.Action("AtualizaPreco", "CarrinhoCompras")', AddAntiForgeryToken({ quantidade: quantidade, preco: preco }))
+            .done(function(data){
+                console.warn(data);
+            });
+        });
+
+        $('#btnExcuiItemcarrinho').click(function () {
+            console.warn('Entrou calcular');
+            var id = $("#hdnExcluiItemCarrinho").val().toString();
+            console.warn(id);
+            $.post('@Url.Action("ExcluirItemCarrinho", "CarrinhoCompras")', AddAntiForgeryToken({ idCarrinho: id }))
+            .done(function(data){
+                console.warn(data);
+            });
+        });
+
+        function ExcluirItemCarrinho(id) {
+            console.warn('Entrou função carrinho');
+            console.warn(id);
+            $.ajax({
+                type: "POST",
+                url: "/CarrinhoCompras/ExcluirItemCarrinho",
+                data: idCarrinho = id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                    } else {
+                    }
+                }
+            });
+        }
+
+        function AtualizaQtdMala(qtd) {
+            console.warn(qtd);
+            $.ajax({
+                type: "POST",
+                url: "/CarrinhoCompras/AtualizaQtdMala",
+                data: qtdMala = qtd,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                }
+            });
+        }
+
+        function SucessoPagamento() {
+            swal({
+                title: "Pagamento Efetuado",
+                text: "Seu pagamento foi realizado com sucesso!",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Efetuado!", "Seu pagamento foi realizado com sucesso.", "success");
+                    };
+                });
+        }
+
+        function FalhaPagamento() {
+            swal({
+                title: "Pagamento Não Efetuado",
+                text: "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Não Efetuado!", "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!", "error");
+                    };
+                });
+        }
+
+    </script>
+}

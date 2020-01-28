@@ -1,0 +1,111 @@
+﻿@model VitrineVirtual.Model.CUA_Empresas
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Empresas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome_Fantasia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome_Fantasia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status_Empresa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status_Empresa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CNPJ)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CNPJ)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Criacao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Data_Criacao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Razao_Social)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Razao_Social)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CEP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CEP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Endereco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Endereco)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Complemento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Complemento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cidade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Matriz_Filial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Matriz_Filial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Situacao_Cadastral)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Situacao_Cadastral)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Natureza_Juridica)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Natureza_Juridica)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Empresa }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

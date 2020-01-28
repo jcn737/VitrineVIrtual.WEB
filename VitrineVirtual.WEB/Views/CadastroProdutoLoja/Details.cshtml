@@ -1,0 +1,373 @@
+﻿@using VitrineVirtual.Model
+@using VitrineVirtual.WEB.Controllers
+@model VitrineVirtual.Model.Cadastro_Produto_Loja
+
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+}
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Detalhes do Produto</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a>Detalhes</a>
+            </li>
+            <li class="active">
+                <strong>Detalhes do Produto</strong>
+            </li>
+        </ol>
+
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+
+
+@if (Request.IsAuthenticated && (User.IsInRole("Administrador") || User.IsInRole("Revendedor") || User.IsInRole("Logista")))
+{
+    <div>
+        @Html.ActionLink("Editar", "Edit", "CadastroProdutoLoja", new { id = Model.ID_Cadastro_Prod_Loja }, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+        @Html.ActionLink("Voltar", "Index", "CadastroProdutoLoja", null, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox product-detail">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="product-images">
+                                    <div style="width:380px;height:380px">
+                                        <div class="cart-product-imitation">
+                                            @{
+                                                ((CadastroProdutoLojaController)this.ViewContext.Controller).GetImage(Model.ID_Cadastro_Prod_Loja);
+                                                var cadProd = (Cadastro_Produto_Loja)Session["Foto"];
+
+                                                if (Session["caminho_1"] != null)
+                                                {
+                                                    var caminhoFoto1 = (FilePath)Session["caminho_1"];
+
+                                                    <a href="#" title="Foto 1">
+                                                        <img style="position:initial" width="365" height="365" src="@Url.Content(caminhoFoto1.Caminho_Arquivo)" />
+                                                    </a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div style="width:380px;height:400px">
+                                        <div class="cart-product-imitation">
+                                            @{
+                                                if (Session["caminho_2"] != null)
+                                                {
+                                                    var caminhoFoto2 = (FilePath)Session["caminho_2"];
+
+                                                    <a href="#" title="Foto 2">
+                                                        <img style="position:initial" width="365" height="365" src="@Url.Content(caminhoFoto2.Caminho_Arquivo)" />
+                                                    </a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <div style="width:380px;height:400px">
+                                        <div class="cart-product-imitation">
+                                            @{
+                                                if (Session["caminho_3"] != null)
+                                                {
+                                                    var caminhoFoto3 = (FilePath)Session["caminho_3"];
+                                                    <a href="#" title="Foto 3">
+                                                        <img style="position:initial" width="365" height="365" src="@Url.Content(caminhoFoto3.Caminho_Arquivo)" />
+                                                    </a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <h2 class="font-bold m-b-xs">
+                                    @Html.DisplayFor(modelItem => Model.Nome_Produto)
+                                </h2>
+                                <small>@Html.DisplayFor(modelItem => Model.Modelo_Produto)</small>
+                                <div class="m-t-md">
+                                    <h2 class="product-main-price">@Html.DisplayFor(modelItem => Model.Preco_Produto) <small class="text -muted">Sem frete</small> </h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 pull-left">
+                                        <input type="text" id="txtAtualizaPreco" name="preco" class="form-control" maxlength="4">
+                                        <input type="hidden" name="preco" id="hdnAtualizaPreco" value="@Model.Preco_Produto.ForcedString()" />
+                                        <input type="hidden" name="idProduto" id="idProduto" value="@Model.ID_Cadastro_Prod_Loja" />
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <input type="button" id="btnAtualizaPreco" value="Calcular" class="form-control text-white" style="background-color: #3872a2">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 pull-right">
+                                        Subtotal R$ <label id="atualizaPreco"></label>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4>Descrição do Produto</h4>
+                                <div class="small text-muted">
+                                    @Html.DisplayFor(modelItem => Model.Descricao_Produto)
+                                </div>
+                                <dl class="small m-t-md"></dl>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="submit" id="addCarrinho" name="addCarrinho" class="btn btn-success" onclick="AdicionaAoCarrinho()" style="background-color: #3872a2" />
+                                        @*@Html.ActionLink("Adicionar a Mala", "Create", "CarrinhoCompras", null, new { @class = "btn btn-success", @style = "background-color: #3872a2" })*@
+                                    </div>
+                                    <div class="col-md-5">
+                                        @Html.ActionLink("Ir para Mala", "Index", "CarrinhoCompras", new { idProduto = Model.ID_Cadastro_Prod_Loja }, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        @*<input type="image" name="submit" src="https://www.paypal.com/pt_BR/i/btn/btn_xpressCheckout.gif"
+                                                onclick="location.href='@Url.Action("PaymentWithPaypal", "Paypal")'" />
+                                            onclick="PaymentComPayPal()" />*@
+                                        <div id="paypal-button-container"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div id="paypal-button-container"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-footer">
+                            <span class="pull-right">
+                                Full stock - <i class="fa fa-clock-o"></i> Datetime.Now.toString()
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles {
+    @Styles.Render("~/plugins/slickStyles")
+    @Styles.Render("~/plugins/slickThemeStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/slick")
+
+    @*<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+        <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>*@
+
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=BRL"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=SB_CLIENT_ID"></script>
+
+    <script type="text/javascript">
+        console.warn('Entrou paypal');
+        var valor = '@Session["Preco_Produto"].ToString().Replace(",",".")';
+        paypal.Buttons(
+            {
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: valor,
+                    currency: 'BRL',
+                    total: '10.00'
+                                }
+                                }]
+                    });
+                 },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        alert('Transação realizada por:  ' + details.payer.name.given_name);
+                        // Call your server to save the transaction
+                        return fetch('/paypal-transaction-complete', {
+                            method: 'post',
+                            headers: {
+                                    'content-type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                orderID: data.orderID
+                            })
+                        });
+                    });
+                }
+            }).render('#paypal-button-container');
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.product-images').slick({
+                dots: true
+            });
+
+            AddAntiForgeryToken = function (data) {
+                data.__RequestVerificationToken = $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
+                return data;
+            };
+
+        });
+
+        
+
+        $('#btnAtualizaPreco').click(function () {
+            console.warn('Entrou calcular');
+            var quantidade = parseInt($("#txtAtualizaPreco").val());
+            var preco = parseFloat($("#hdnAtualizaPreco").val()).toFixed(2);
+            var id = $("#idProduto").val();
+            console.warn(id);
+            console.warn(quantidade);
+            console.warn(preco);
+            var somaQtdItem = preco * quantidade;
+            console.warn(somaQtdItem);
+            $("#atualizaPreco").text(somaQtdItem.toString().replace(".",","));
+            $.post('@Url.Action("AtualizaPreco", "CadastroProdutoLoja")', AddAntiForgeryToken({ id: id,quantidade: quantidade, preco: preco }))
+                .done(function (data) {
+                    console.warn(data);
+                });
+        });
+
+
+        function AdicionaAoCarrinho() {
+            console.warn('Entrou função')
+            $.ajax({
+                type: "POST",
+                url: "/CarrinhoCompras/AdicionaAoCarrinho",
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        alert("Sucesso");
+                    } else {
+                        alert("Erro ao Adicionar");
+                    }
+                }
+            });
+        }
+
+        function PaymentComPayPal() {
+            console.warn('Entrou função')
+            $.ajax({
+                type: "POST",
+                url: "/Paypal/PaymentWithPaypal",
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        alert("Sucesso");
+                    } else {
+                        alert("Erro ao Adicionar");
+                    }
+                }
+            });
+        }
+
+        function showPopUpConfirm(title, text, type) {
+            console.warn('Entrou na função showPopUpConfirm')
+            swal({
+                title: title,
+                text: text,
+                type: type,
+                showConfirmButton: true,
+                confirmButtonText: "Ok"
+            },
+                function (isConfirm) {
+                    if (type == 'success') {
+                        window.location.href = "SRM_Catalago_Produto.aspx";
+                    }
+                    else {
+                        window.location.href = "SRM_Catalago_Produtos_Importar.aspx";
+                    }
+                }
+            );
+        }
+
+        function swalSucesso() {
+            swal({
+                title: "Sucesso!",
+                text: "Produto inserido com sucesso!",
+                type: "success"
+            });
+        }
+
+        function swalFalhou() {
+            swal({
+                title: "Falha!",
+                text: "O Produto não pode ser inserido, verifique os campos!",
+                type: "error"
+            });
+        }
+    </script>
+}
+
+
+
+@*<script type="text/javascript">
+
+    createOrder: function() {
+      return fetch('/my-server/create-paypal-transaction', {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function(res) {
+        return res.json();
+      }).then(function(data) {
+        return data.orderID;
+      });
+    }
+        paypal.Button.render({
+
+            env: 'sandbox', // sandbox | production
+
+            // Show the buyer a 'Pay Now' button in the checkout flow
+            commit: true,
+
+            // payment() is called when the button is clicked
+            payment: function () {
+
+
+                // Set up a url on your server to create the payment
+                var CREATE_URL = '/Paypal/CreatePayment';
+
+
+                // Make a call to your server to set up the payment
+                return paypal.request.post(CREATE_URL)
+                    .then(function (res) {
+                        return res.paymentID;
+                    });
+            },
+
+            onAuthorize: function (data, actions) {
+
+                // Set up a url on your server to execute the payment
+                var EXECUTE_URL = '/Paypal/ExecutePayment/';
+
+                // Set up the data you need to pass to your server
+                var data = {
+                    paymentID: data.paymentID,
+                    payerID: data.payerID
+                };
+
+                // Make a call to your server to execute the payment
+                return paypal.request.post(EXECUTE_URL, data)
+                    .then(function (res) {
+                        window.alert('Payment Complete!');
+                    });
+            }
+
+        }, '#paypal-button-container');
+    </script>*@

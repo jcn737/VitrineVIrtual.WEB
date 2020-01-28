@@ -1,0 +1,23 @@
+2019-07-09 12:36:51.7772|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-09 12:37:10.2869|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-09 12:37:22.3854|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-11 22:31:22.4211|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-11 22:31:42.8630|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-11 22:34:38.8183|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-15 22:34:48.0985|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-15 22:39:06.5040|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-15 22:41:24.9174|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-15 22:41:34.9132|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-16 22:13:21.0461|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-16 22:17:39.7433|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-16 22:33:58.5324|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-22 00:00:24.7509|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-22 00:00:58.1964|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-24 23:27:21.5961|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|Referência de objeto não definida para uma instância de um objeto.
+2019-07-24 23:29:55.7251|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|O índice estava fora do intervalo. Ele deve ser não-negativo e menor que o tamanho da coleção.
+Nome do parâmetro: index
+2019-07-24 23:31:26.3585|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|O índice estava fora do intervalo. Ele deve ser não-negativo e menor que o tamanho da coleção.
+Nome do parâmetro: index
+2019-07-25 22:10:57.2895|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|O índice estava fora do intervalo. Ele deve ser não-negativo e menor que o tamanho da coleção.
+Nome do parâmetro: index
+2019-08-05 22:45:13.8846|ERROR|VitrineVirtual.WEB.Controllers.CadastroProdutoLojaController|The 'Quantidade_Produto' property on 'Cadastro_Produto_Loja' could not be set to a 'System.Decimal' value. You must set this property to a non-null value of type 'System.Int32'. 

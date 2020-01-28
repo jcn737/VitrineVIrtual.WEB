@@ -1,0 +1,57 @@
+﻿@using VitrineVirtual.WEB.Models
+@model VitrineVirtual.WEB.Models.EditUserRoles
+
+@{
+    ViewBag.Title = "Editar User Roles";
+}
+
+<h2>Editar User Roles</h2>
+
+<div class="middle-box text-center fa-registered animated fadeInDown">
+
+    <h2>@ViewBag.Title.</h2>
+    <div class="col-md-12">
+        <section id="registerForm">
+            @using (Html.BeginForm("EditUserRoles", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Editar as permissões do usuário</h4>
+                <hr />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-6 control-label text-left" })
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Tipo Usuário:</label>
+                    <div class="col-sm-12">
+                        @Html.DropDownListFor(m => m.RoleId, new List<SelectListItem>
+                            {
+                            new SelectListItem() {Text = "Selecione...", Value="0"},
+                            new SelectListItem() {Text = "Administrador", Value="1"},
+                            new SelectListItem() {Text = "Logista", Value="2"},
+                            new SelectListItem() {Text = "Revendedor", Value="3"},
+                            new SelectListItem() {Text = "Visitante", Value="4"}
+                            },
+                            new{@class = "form-control"})
+                        @Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10">
+                        <input type="submit" class="btn btn-success" style="background-color:#3872a2" value="Cadastrar" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

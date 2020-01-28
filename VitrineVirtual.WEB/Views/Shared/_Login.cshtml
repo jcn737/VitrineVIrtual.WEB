@@ -1,0 +1,77 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Login</title>
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <h3>Benvindo ao Vitrine Virtual</h3>
+            <p>
+                A Vitrine Virtual é um marketplace das melhores lojas do Brás, José Paulino, 25 de março e Franca.
+                Vendas exclusivas para pessoas com CNPJ, com muita praticidade, comodidade e rapidez para suas compras.
+                Não fique de fora, cadastre-se agora e amplie suas vendas!
+            </p>
+            <p>Faça o login ou cadastre-se agora e seja um filiado.</p>
+            <form class="m-t" role="form" action="#">
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Usuário" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Senha" required="">
+                </div>
+                <div class="g-recaptcha" data-sitekey="6LfRBjcUAAAAAKnoiegXZp_BYc7Dr6d1lKe78YlL"></div>
+                <button type="submit" class="btn btn-primary block full-width m-b" style="background-color:#3872a2">Entrar</button>
+                <a href="#"><small>Esqueceu a senha?</small></a>
+                <p class="text-muted text-center"><small>Logista ou Revendedor, preencha sua proposta de cadastro</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="@Url.Action("Register", "Pages")">Enviar Proposta de Cadastro</a>
+            </form>
+            <p class="m-t"> <small>Faça seu negócio crescer e alcançar o maior número de pessoas. &copy; 2015</small> </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+
+@using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="dropdown">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="ma-nav-text ma-account-name">@User.Identity.Name</span>
+            <i class="material-icons md-36 text-inverse">person</i>
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-right ma-dropdown-tray">
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                    <i class="material-icons">system_update_alt</i>
+                    <span>Sign out</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+}

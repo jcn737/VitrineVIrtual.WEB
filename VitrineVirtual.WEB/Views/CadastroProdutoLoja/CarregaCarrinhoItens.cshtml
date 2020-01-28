@@ -1,0 +1,182 @@
+﻿@using VitrineVirtual.Model
+@using VitrineVirtual.WEB.Controllers
+@model IEnumerable<VitrineVirtual.Model.Carrinho_Compras>
+
+@{
+    ViewBag.Title = "CarregaCarrinhoItens";
+}
+
+<h2>Mala de Itens</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-md-9">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="pull-right">(<strong>Model.Members.IndexOf(item)</strong>) produtos</span>
+                    <h5>Quantidade itens na mala</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="table-responsive">
+                        <table class="table shoping-cart-table">
+                            <tbody>
+                                <tr>
+                                    <td width="90">
+                                        <div class="cart-product-imitation">
+                                            @{
+                                                ((CadastroProdutoLojaController)this.ViewContext.Controller).GetImage(item.ID_Cadastro_Prod_Loja);
+                                                var cadProd = (Cadastro_Produto_Loja)Session["Foto"];
+
+                                                if (Session["caminho_1"] != null)
+                                                {
+                                                    var caminhoFoto1 = (FilePath)Session["caminho_1"];
+
+                                            <a href="#" title="Foto 1">
+                                                <img style="position:initial" width="90" height="90" src="@Url.Content(caminhoFoto1.Caminho_Arquivo)" />
+                                            </a>
+                                                }
+                                            }
+                                        </div>
+                                    </td>
+                                    <td class="desc">
+                                        <h3>
+                                            <a href="#" class="text-navy">
+                                                @Html.DisplayFor(modelItem => item.Nome_Produto)
+                                            </a>
+                                        </h3>
+                                        <h4>
+                                            <a href="#" class="text-navy">
+                                                @Html.DisplayFor(modelItem => item.Modelo_Produto)
+                                            </a>
+                                        </h4>
+                                        <p class="small">
+                                            @Html.DisplayFor(modelItem => item.Descricao_Produto)
+                                        </p>
+                                        <dl class="small m-b-none">
+                                            <dt>Description lists</dt>
+                                            <dd>A description list is perfect for defining terms.</dd>
+                                        </dl>
+                                        <div class="m-t-sm">
+                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>
+                                            |
+                                            <a href="#" class="text-muted"><i class="fa fa-trash"></i> Remove item</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Preco_Produto)
+                                        <s class="small text-muted">$230,00</s>
+                                    </td>
+                                    <td width="65">
+                                        <input type="text" class="form-control" placeholder="1">
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            @Html.DisplayFor(modelItem => item.Preco_Desconto)
+
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+                    <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Cart Summary</h5>
+                </div>
+                <div class="ibox-content">
+                    <span>
+                        Total
+                    </span>
+                    <h2 class="font-bold">
+                        $390,00
+                    </h2>
+                    <hr />
+                    <span class="text-muted small">
+                        *For United States, France and Germany applicable sales tax will be applied
+                    </span>
+                    <div class="m-t-sm">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Checkout</a>
+                            <a href="#" class="btn btn-white btn-sm"> Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/codeEditorStyles")
+    @Styles.Render("~/plugins/jquery-ui/jqueryuiStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/sweetAlert")
+    @Scripts.Render("~/plugins/unobtrusive")
+    @Scripts.Render("~/plugins/unobtrusiveMin")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/inspinia")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/plugins/jqueryui")
+
+    <script type="text/javascript">
+
+        AddAntiForgeryToken = function (data) {
+            data.__RequestVerificationToken = $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
+            return data;
+        };
+
+        function SucessoPagamento(id) {
+            swal({
+                title: "Pagamento Efetuado",
+                text: "Seu pagamento foi realizado com sucesso!",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Efetuado!", "Seu pagamento foi realizado com sucesso.", "success");
+                    };
+                });
+        }
+
+        function FalhaPagamento(id) {
+            swal({
+                title: "Pagamento Não Efetuado",
+                text: "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Não Efetuado!", "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!", "error");
+                    };
+                });
+        }
+
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿@model VitrineVirtual.Model.CUA_Empresas
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CUA_Empresas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome_Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome_Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status_Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status_Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Criacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Criacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Alteracao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Alteracao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome_Fantasia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome_Fantasia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome_Tecnico)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome_Tecnico)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CNPJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CNPJ)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

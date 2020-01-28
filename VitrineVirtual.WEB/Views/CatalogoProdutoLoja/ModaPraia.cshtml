@@ -1,0 +1,58 @@
+﻿@model IEnumerable<VitrineVirtual.Model.Cadastro_Produto_Loja>
+
+@{
+    ViewBag.Title = "Moda Praia";
+}
+
+<h2>Moda Praia</h2>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" />
+
+<div class="row wrapper wrapper-content border-bottom white-bg">
+    <div class="animated fadeInRight">
+        <div class="col-sm-12">
+            <div class="form-group">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 form-group">
+                        <div class="ibox-block">
+                            <div class="ibox-block-content product-box">
+                                <div class="product-imitation">
+                                    <span class="product-images">
+                                        @Html.DisplayFor(modelItem => item.Foto_Produto_1)
+                                    </span>
+                                </div>
+                                <div class="product-desc">
+                                    <span class="product-price" style="background-color: #3872a2">
+                                        @Html.DisplayFor(modelItem => item.Preco_Produto)
+                                    </span>
+                                    <small class="product-name">
+                                        @Html.DisplayFor(modelItem => item.Nome_Produto)
+                                    </small>
+                                    <a class="text-muted">
+                                        @Html.DisplayFor(modelItem => item.Modelo_Produto)
+                                    </a>
+                                    <small class="text-muted">
+                                        @Html.DisplayFor(modelItem => item.Descricao_Produto)
+                                    </small>
+                                    <div class="small m-t-xs">
+                                        @Html.DisplayFor(modelItem => item.Quantidade_Produto)
+                                    </div>
+                                    <div class="small m-t-xs">
+                                        @Html.DisplayFor(modelItem => item.Status_Produto)
+                                    </div>
+                                    <div class="m-t text-righ">
+                                        <a class="btn btn-xs btn-outline btn-info" href="@Url.Action("ModaMasculina", "CatalogoProdutoLoja", new { id = item.ID_Cadastro_Prod_Loja })">Info<i class="fa fa-long-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>

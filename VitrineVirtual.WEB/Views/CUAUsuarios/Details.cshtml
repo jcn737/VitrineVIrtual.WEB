@@ -1,0 +1,226 @@
+﻿@model VitrineVirtual.Model.CUA_Usuarios
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CUA_Usuarios</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome_Completo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome_Completo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Senha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_Idioma)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_Idioma)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login_Usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login_Usuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Departamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Departamento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cargo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cargo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Nascimento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Nascimento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cpf)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cpf)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Endereco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Endereco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero_Endereco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero_Endereco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Complemento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Complemento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bairro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bairro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_UF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_UF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Municipio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Municipio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Observacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Observacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Criacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Criacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Alteracao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Alteracao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantidade_Senhas_Incorretas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantidade_Senhas_Incorretas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Exclusao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Exclusao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Ultimo_Logon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Ultimo_Logon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Ultima_Alteracao_Senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data_Ultima_Alteracao_Senha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantidade_Logon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantidade_Logon)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Usuario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

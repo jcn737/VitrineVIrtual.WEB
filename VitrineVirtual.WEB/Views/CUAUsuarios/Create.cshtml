@@ -1,0 +1,287 @@
+﻿@using VitrineVirtual.Model
+@using VitrineVirtual.WEB.Models
+@model VitrineVirtual.Model.CUA_Usuarios
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "CUAUsuarios", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <div>
+        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+    </div>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.Label("Carregar Registro Usuário", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.TextBox("RegistroUsuario", Request.Form["RegistroUsuario"], new { @id = "RegistroUsuario", @class = "form-control", @type = "email" })
+            <!-- <input type="text" id="CNPJConsulta" name="CNPJConsulta" class="form-control"> -->
+        </div>
+        <div>
+            @Html.ActionLink("Carregar Registro", "PesquisaUsuario", "CUAUsuarios", new { cnpj = Request.Form["RegistroUsuario"] }, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("CNPJ a Consultar", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.TextBox("CNPJConsulta", Request.Form["CNPJConsulta"], new { @id = "CNPJConsulta", @class = "form-control", @type = "number" })
+            <!-- <input type="text" id="CNPJConsulta" name="CNPJConsulta" class="form-control"> -->
+        </div>
+        <div>
+            @Html.ActionLink("Pesquisar Dados", "retornaDadosPorCNPJ", "CUAUsuarios", new { cnpj = Request.Form["CNPJConsulta"] }, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nome_Completo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Nome_Completo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nome_Completo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Login_Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Login_Usuario, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Login_Usuario, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Telefone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Telefone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Departamento:</label>
+        <div class="col-sm-5">
+            @Html.DropDownListFor(x => x.Departamento, new List<SelectListItem>
+            {
+               new SelectListItem() {Text = "Geral", Value="Geral"},
+               new SelectListItem() {Text = "Esporte", Value="Esporte"},
+               new SelectListItem() {Text = "Social", Value="Social"},
+               new SelectListItem() {Text = "Empresarial", Value="Empresarial"},
+               new SelectListItem() {Text = "Infantil", Value="Infantil"},
+               new SelectListItem() {Text = "Escolar", Value="Escolar"},
+               new SelectListItem() {Text = "Uniformes", Value="Uniformes"}
+                },
+                  new
+                  {
+                      @class = "form-control"
+                  })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Função Usuário:</label>
+        <div class="col-sm-5">
+            @Html.DropDownListFor(x => x.Cargo, new List<SelectListItem>
+            {
+               new SelectListItem() {Text = "Administrador", Value="Administrador"},
+               new SelectListItem() {Text = "Vendedor", Value="Vendedor"},
+               new SelectListItem() {Text = "Gerente", Value="Gerente"},
+               new SelectListItem() {Text = "Responsável Técnico", Value="Responsável_Tecnico"},
+               new SelectListItem() {Text = "Proprietário", Value="Proprietario"},
+               new SelectListItem() {Text = "Logistica", Value="Logistica"},
+               new SelectListItem() {Text = "Estoque", Value="Estoque"}
+            },
+            new
+            {
+                @class = "form-control"
+            })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Função Usuário:</label>
+        <div class="col-sm-5">
+            @Html.DropDownListFor(x => x.Tipo_Usuario, new List<SelectListItem>
+            {
+               new SelectListItem() {Text = "Administrador", Value="Administrador"},
+               new SelectListItem() {Text = "Logista", Value="Logista"},
+               new SelectListItem() {Text = "Revendedor", Value="Revendedor"},
+               new SelectListItem() {Text = "Visitante", Value="Visitante"}
+            },
+            new
+            {
+                @class = "form-control"
+            })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CNPJ, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.CNPJ, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CNPJ, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Cpf, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Cpf, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Cpf, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Rg, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Rg, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Rg, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Data_Nascimento, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Data_Nascimento, new { htmlAttributes = new { @class = "datepicker", @type = "datetime-local" } })
+            @Html.ValidationMessageFor(model => model.Data_Nascimento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Cep, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Endereco, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Endereco, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Numero_Endereco, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Numero_Endereco, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Numero_Endereco, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Complemento, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Complemento, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Complemento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Municipio, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Municipio, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Municipio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UF, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.UF, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UF, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" value="Cadastrar" style="background-color: #3872a2" class="btn btn-success pull-right" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/jquery-ui/jqueryuiStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sweetAlert")
+    @Scripts.Render("~/plugins/unobtrusive")
+    @Scripts.Render("~/plugins/unobtrusiveMin")
+    @Scripts.Render("~/plugins/inspinia")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/plugins/jqueryui")
+
+    <script type="text/javascript">
+    function pesquisaCNPJ() {
+        $("#carregarCNPJ").click(function () {
+            var pesquisa = $("#pesquisaCNPJ").val().toString();
+            console.warn(pesquisa);
+            $.post('@Url.Action("RetornaDadosPorCNPJ", "CUAUsuarios")', { cnpj : pesquisa })
+            .done(function(data){
+                console.warn(data);
+            });
+        });
+    };
+
+     //Função para a função de Aprovação/Rejeição
+    function showPopUpConfirm(title, text, type) {
+        swal({
+            title: title,
+            text: text,
+            type: type,
+            showCancelButton: true,
+            confirmButtonColor: "#72BF53",
+            confirmButtonText: "Aprovar",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $('.confirm').attr("disabled", "disabled");
+                }
+                else { swal("Cancelado", "Operação Cancelada", "error"); }
+            }
+        );
+    };
+    </script>
+
+}

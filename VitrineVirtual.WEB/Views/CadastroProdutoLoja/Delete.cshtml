@@ -1,0 +1,44 @@
+﻿@model VitrineVirtual.Model.Cadastro_Produto_Loja
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Apaga Item</h2>
+
+<h4>Tem certeza que deseja apagar esse produto da lista?</h4>
+<h4>Depois de apagado da sua lista esses produtos não serão mais vistos ou editados</h4>
+<div>
+    <h3>Apaga Produto</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ID_Cadastro_Prod_Loja)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nome_Produto)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Categoria_Produto)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descricao_Produto)
+            </dd>
+        </dl>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        @Html.ActionLink("Voltar", "Index")
+
+    </div>
+    }
+</div>

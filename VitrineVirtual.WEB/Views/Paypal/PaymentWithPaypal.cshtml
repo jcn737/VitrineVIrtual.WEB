@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "PaymentWithPaypal";
+}
+
+<h2>PaymentWithPaypal</h2>
+
+@section Styles {
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/sweetAlert")
+
+    <script type="text/javascript">
+    function showPopUpConfirm(title, text, type) {
+        console.warn('Entrou na função showPopUpConfirm')
+        swal({
+            title: title,
+            text: text,
+            type: type,
+            showConfirmButton: true,
+            confirmButtonText: "Ok"
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                     $.post('@Url.Action("Index", "CadastroProdutoLoja")', AddAntiForgeryToken({ id: id })).done(function(data){
+                         console.warn(data);
+                     });
+                    swal("Sucesso!", "Compra concretizada com sucesso.", "success");
+                } else {
+                    swal("Cancelado", "A compra não pode ser concluída.", "error");
+                }
+            });
+        );
+    }
+    </script>
+
+}
+

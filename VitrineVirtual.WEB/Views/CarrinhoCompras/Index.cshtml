@@ -1,0 +1,297 @@
+﻿@using VitrineVirtual.Model
+@using CorreiosPrecosEPrazo.Correios
+@using NLog
+@using NLog.Fluent
+@model List<VitrineVirtual.Model.Carrinho_Compras>
+
+
+@{
+    ViewBag.Title = "CarregaCarrinhoItens";
+    var precoTotal = TempData["Total"].ToString();
+    var frete = TempData["Frete"] != null ? TempData["Frete"].ToString() : string.Empty;
+    var dataEntrega = TempData["Data_Entrega"] != null ? TempData["Data_Entrega"].ToString() : string.Empty;
+    var totalFrete = TempData["Total_Frete"] != null ? TempData["Total_Frete"].ToString() : string.Empty;
+}
+
+<h2>Mala de Itens</h2>
+
+<form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+
+
+@Html.ActionLink("Continuar Comprando", "Index", "Home", null, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+@Html.Hidden("SomaTotal", ViewData["Total"], new { @id = "hdnTotal" })
+<br>
+<br>
+<div class="row">
+    <div class="col-md-9">
+        <div class="ibox">
+            <div class="ibox-title">
+                <span class="pull-right">(<strong>@ViewData["Qtd_Itens"].ToString()</strong>) produtos</span>
+                <h5>Quantidade itens na mala</h5>
+            </div>
+            <div class="ibox-content">
+
+                <div class="table-responsive">
+                    <table class="table shoping-cart-table">
+                        <tbody>
+                            @foreach (var item in Model.Where(item => item != null))
+                            {
+                                <tr>
+                                    <td width="120">
+                                        <div class="cart-product-imitation">
+                                            <a href="#" title="Foto">
+                                                <img style="position:initial" width="90" height="90" src="@Url.Content(item.Caminho_Arquivo)" />
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="desc" width="350">
+                                        <h3>
+                                            <a href="#" class="text-navy">
+                                                @Html.DisplayFor(modelItem => item.Nome_Produto)
+                                            </a>
+                                        </h3>
+                                        <h4>
+                                            <a href="#" class="text-navy">
+                                                @Html.DisplayFor(modelItem => item.Modelo_Produto)
+                                            </a>
+                                        </h4>
+                                        <h4 class="text-primary">
+                                            @Html.DisplayFor(modelItem => item.Descricao_Produto)
+                                        </h4>
+                                        <h4 class="text-info">
+                                            Preço Unitário R$ @Html.DisplayFor(modelItem => item.Preco_Produto)
+                                        </h4>
+                                    </td>
+                                    <td width="40">
+                                        <div class="m-t-sm">
+                                            <button id="btnExcuiItemcarrinho" class="btn-danger btn btn-xs apaga" value="Excuir"><i class="fa fa-trash"></i></button>
+                                            <input type="hidden" name="itemCarrinho" id="hdnExcluiItemCarrinho" value="@item.ID_Carrinho_Compras" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="ibox">
+            <div class="ibox-title">
+                Pagamento
+            </div>
+            <div class="ibox-content">
+                <span>
+                    Total
+                </span>
+                <h2 class="font-bold">
+                    R$ @Session["Total"].ToString()
+                </h2>
+                <hr />
+                <div class="m-t-sm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div id="paypal-button-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <label class="col-sm-2 control-label">CEP:</label>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" id="cepDestino" name="cepDestino" class="form-control">
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="button" id="btnCEP" value="Calcular" class="form-control text-white" style="background-color: #3872a2">
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <label class="col-sm-4 control-label">Tipo Envio</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownList("ddlTipoFrete", new List<SelectListItem>
+                        {
+                           new SelectListItem() {Text = "Pac", Value="04510"},
+                           new SelectListItem() {Text = "Sedex", Value="04014"}
+                           //new SelectListItem() {Text = "Sedex 10", Value="40215"},
+                           //new SelectListItem() {Text = "Sedex 12", Value="40169"},
+                           //new SelectListItem() {Text = "Sedex Hoje", Value="40290"}
+                            },
+                              new
+                              {
+                                  @class = "form-control",
+                                  @id = "ddlTipoFrete"
+                              })
+                    </div>
+                    <br />
+                </div>
+                <div class="row">
+                    <label class="col-sm-4 control-label">Peso</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownList("ddlPesoItens", new List<SelectListItem>
+                        {
+                           new SelectListItem() {Text = "Até 1 Kg", Value="1"},
+                           new SelectListItem() {Text = "Até 2 Kg", Value="2"},
+                           new SelectListItem() {Text = "Até 3 Kg", Value="3"},
+                           new SelectListItem() {Text = "Até 4 Kg", Value="4"},
+                           new SelectListItem() {Text = "Até 5 Kg", Value="5"},
+                           new SelectListItem() {Text = "Até 10 Kg", Value="10"},
+                           new SelectListItem() {Text = "Até 15 Kg", Value="15"},
+                           new SelectListItem() {Text = "Até 20 Kg", Value="20"},
+                           new SelectListItem() {Text = "Até 30 Kg", Value="30"}
+                            },
+                              new
+                              {
+                                  @class = "form-control",
+                                  @id = "ddlPesoItens"
+                              })
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <h4>Frete R$ @frete</h4>
+                    <br />
+                    <h4>Produtos R$ @precoTotal</h4>
+                    <br />
+                    <h4>Total R$ @totalFrete</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/codeEditorStyles")
+    @Styles.Render("~/plugins/jquery-ui/jqueryuiStyles")
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/sweetAlert")
+    @Scripts.Render("~/plugins/unobtrusive")
+    @Scripts.Render("~/plugins/unobtrusiveMin")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/inspinia")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/plugins/jqueryui")
+
+
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=BRL"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=SB_CLIENT_ID"></script>
+
+    <script type="text/javascript">
+        console.warn('Entrou paypal');
+        var valor = '@Session["Total"].ToString().Replace(",",".")';
+        paypal.Buttons(
+            {
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: valor,
+                    currency: 'BRL',
+                    total: '10.00'
+                                }
+                                }]
+                    });
+                 },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        alert('Transação realizada por:  ' + details.payer.name.given_name);
+                        // Call your server to save the transaction
+                        return fetch('/paypal-transaction-complete', {
+                            method: 'post',
+                            headers: {
+                                    'content-type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                orderID: data.orderID
+                            })
+                        });
+                    });
+                }
+            }).render('#paypal-button-container');
+    </script>
+
+    <script type="text/javascript">
+
+        AddAntiForgeryToken = function (data) {
+            data.__RequestVerificationToken = $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
+            return data;
+        };
+
+        $('#btnCEP').click(function () {
+            console.warn('Entrou calcular Frete');
+            var cep = $("#cepDestino").val();
+            var total = $("#hdnTotal").val();
+            var tipoFrete = $("#ddlTipoFrete").val();
+            var pesoItens = $("#ddlPesoItens").val();
+            $.post('@Url.Action("CalculaFrete", "CarrinhoCompras")', AddAntiForgeryToken({ cep: cep, preco: total, tipoFrete: tipoFrete, pesoItens: pesoItens }))
+                .done(function (data) {
+                    
+                    window.location.href="@Url.Action("Index", "CarrinhoCompras")";
+            });
+        });
+
+
+        $('#btnExcuiItemcarrinho').click(function () {
+            console.warn('Entrou calcular');
+            var id = $("#hdnExcluiItemCarrinho").val().toString();
+            console.warn(id);
+            $.post('@Url.Action("ExcluirItemCarrinho", "CarrinhoCompras")', AddAntiForgeryToken({ idCarrinho: id }))
+            .done(function(data){
+                console.warn(data);
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        function SucessoPagamento() {
+            swal({
+                title: "Pagamento Efetuado",
+                text: "Seu pagamento foi realizado com sucesso!",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Efetuado!", "Seu pagamento foi realizado com sucesso.", "success");
+                    };
+                });
+        }
+
+        function FalhaPagamento() {
+            swal({
+                title: "Pagamento Não Efetuado",
+                text: "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Confirmar",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal("Pagamento Não Efetuado!", "Seu pagamento falhou, tente novamente ou entre em contato com a administradora do seu cartão ou em seus dados no PayPal!", "error");
+                    };
+                });
+        }
+
+    </script>
+}

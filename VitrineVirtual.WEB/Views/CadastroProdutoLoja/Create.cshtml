@@ -1,0 +1,338 @@
+﻿@using VitrineVirtual.Model
+@using VitrineVirtual.WEB.Controllers
+@model VitrineVirtual.Model.Cadastro_Produto_Loja
+
+@{
+    ViewBag.Title = "Cadastro de Produtos";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/3.0.4/metisMenu.css" />
+<link rel="stylesheet" href="@Url.Content("~/Content/plugins/jasny/jasny-bootstrap.min.css")" />
+
+<h2>Produtos</h2>
+
+
+@using (Html.BeginForm("Create", "CadastroProdutoLoja", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    if (User.Identity.IsAuthenticated)
+    {
+
+        <div class="form-horizontal">
+            <h4>Cadastro de Produtos</h4>
+            <div>
+                @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-success", @style = "background-color: #3872a2" })
+            </div>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1"> Cadastro de Produtos</a></li>
+                            @*<li class=""><a data-toggle="tab" href="#tab-2">Imagens </a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3">Descontos </a></li>*@
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    <fieldset class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Produto:</label>
+                                            <div class="col-sm-4">
+                                                @Html.EditorFor(model => model.Nome_Produto, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do Produto" } })
+                                                @Html.ValidationMessageFor(model => model.Nome_Produto, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Preço:</label>
+                                            <div class="col-sm-4">
+                                                @Html.EditorFor(model => model.Preco_Produto, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o Preço" } })
+                                                @Html.ValidationMessageFor(model => model.Preco_Produto, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Modelo:</label>
+                                            <div class="col-sm-4">
+                                                @Html.EditorFor(model => model.Modelo_Produto, new { htmlAttributes = new { @class = "form-control", placeholder = "Digite o modelo do produto" } })
+                                                @Html.ValidationMessageFor(model => model.Modelo_Produto, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Quantidade:</label>
+                                            <div class="col-sm-5">
+                                                @Html.EditorFor(model => model.Quantidade_Produto, new { htmlAttributes = new { @class = "form-control", type = "number", placeholder = "Qual a quantidade" } })
+                                                @Html.ValidationMessageFor(model => model.Quantidade_Produto, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Status do Produto:</label>
+                                            <div class="col-sm-6">
+                                                @Html.EditorFor(model => model.Status_Produto, new { htmlAttributes = new { @class = "form-control", placeholder = "Qual o status do produto" } })
+                                                @Html.ValidationMessageFor(model => model.Status_Produto, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Categoria:</label>
+                                            <div class="col-sm-5">
+                                                @Html.DropDownListFor(x => x.Categoria_Produto, new List<SelectListItem>
+                                                {
+                                                   new SelectListItem() {Text = "Moda Feminina", Value="Moda_Feminina"},
+                                                   new SelectListItem() {Text = "Moda Masculina", Value="Moda_Masculina"},
+                                                   new SelectListItem() {Text = "Moda Baby", Value="Moda_Baby"},
+                                                   new SelectListItem() {Text = "Moda Infanto Juvenil", Value="Moda_Infanto_Juvenil"},
+                                                   new SelectListItem() {Text = "Moda Praia", Value="Moda_Praia"},
+                                                   new SelectListItem() {Text = "Moda Fitness", Value="Moda_Fitness"},
+                                                   new SelectListItem() {Text = "Moda Intima", Value="Moda_Intima"},
+                                                   new SelectListItem() {Text = "Sapatos Femininos", Value="Sapato_Feminino"},
+                                                   new SelectListItem() {Text = "Sapatos Masculinos", Value="Sapato_Masculino"},
+                                                   new SelectListItem() {Text = "Sapatos Inafantis", Value="Sapato_Infatil"}
+                                                    },
+                                                   new
+                                                   {
+                                                       @class = "form-control"
+                                                   })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Descrição do Produto:</label>
+                                            <div class="col-sm-8">
+                                                @Html.EditorFor(model => model.Descricao_Produto, new { @id = "txtTexto", @class = "form-control", @name = "descricao" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Lista Empresas:</label>
+                                            <div class="col-sm-5">
+                                                @Html.DropDownListFor(x => x.CuaEmpresas.Nome_Fantasia, CadastroProdutoLojaController.GetDropDown(), new { @id = "ddlEmpresas", @class = "form-control", @name = "empresas" })
+
+                                            </div>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="col-md-3">
+                                                <div class="row">
+                                                    <img id="output1" style="width: 250px; height: 250px" class="img-thumbnail aligncenter" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                        <span class="input-group-addon btn btn-default btn-file">
+                                                            <span class="fileinput-new">Foto 1</span>
+                                                            <span class="fileinput-exists">Trocar</span>
+                                                            <input type="file" id="upload1" name="upload1" accept="image/*" onchange="loadFile1(event)">
+                                                        </span>
+                                                        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput" onclick="limpaFoto1(event)">Apagar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row">
+                                                    <img id="output2" style="width: 250px; height: 250px" class="img-thumbnail aligncenter" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                        <span class="input-group-addon btn btn-default btn-file">
+                                                            <span class="fileinput-new">Foto 2</span>
+                                                            <span class="fileinput-exists">Trocar</span>
+                                                            <input type="file" id="upload2" name="upload2" accept="image/*" onchange="loadFile2(event)">
+                                                        </span>
+                                                        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput" onclick="limpaFoto2(event)">Apagar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row">
+                                                    <img id="output3" style="width: 250px; height: 250px" class="img-thumbnail aligncenter" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                        <span class="input-group-addon btn btn-default btn-file">
+                                                            <span class="fileinput-new">Foto 3</span>
+                                                            <span class="fileinput-exists">Trocar</span>
+                                                            <input type="file" id="upload3" name="upload3" accept="image/*" onchange="loadFile3(event)">
+                                                        </span>
+                                                        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput" onclick="limpaFoto3(event)">Apagar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row">
+                                                    <img id="output4" style="width: 250px; height: 250px" class="img-thumbnail aligncenter" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                                                        <span class="input-group-addon btn btn-default btn-file">
+                                                            <span class="fileinput-new">Foto 4</span>
+                                                            <span class="fileinput-exists">Trocar</span>
+                                                            <input type="file" id="upload4" name="upload4" accept="image/*" onchange="loadFile4(event)">
+                                                        </span>
+                                                        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput" onclick="limpaFoto4(event)">Apagar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2 col-md-10">
+                                                        <input type="submit" value="Cadastrar" style="background-color: #3872a2" class="btn btn-success pull-right" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        Response.Redirect("~/Account/Login");
+        //new HttpUnauthorizedResult(); //This or the below statement should redirect the user to forms login page
+        //new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized);
+    }
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-scroll/1.3.2/slimscroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/3.0.4/metisMenu.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+
+@section Styles {
+    @Styles.Render("~/plugins/summernoteStyles")
+    @Styles.Render("~/plugins/dropZoneStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/codeEditorStyles")
+    @Styles.Render("~/Content/css")
+
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/plugins/dropZone")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/codeEditor")
+    @Scripts.Render("~/bundles/jqueryMin")
+    @Scripts.Render("~/bundles/jquery")
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('.summernote').summernote();
+
+        });
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
+
+    <script type="text/javascript">
+
+
+        function swalSucesso() {
+            swal({
+                title: "Sucesso!",
+                text: "Produto inserido com sucesso!",
+                type: "success"
+            });
+        }
+
+        function swalFalhou() {
+            swal({
+                title: "Falha!",
+                text: "O Produto não pode ser inserido, verifique os campos!",
+                type: "error"
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        var loadFile1 = function (event) {
+            console.warn('Entrou carrega foto');
+            var reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById('output1').hidden = false;
+                var output1 = document.getElementById('output1');
+                output1.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+
+        var limpaFoto1 = function (event) {
+            console.warn('Entrou limpa foto');
+            document.getElementById('output1').src = "#";
+            document.getElementById('output1').hidden = true;
+        };
+
+        var loadFile2 = function (event) {
+            console.warn('Entrou carrega foto');
+            var reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById('output2').hidden = false;
+                var output2 = document.getElementById('output2');
+                output2.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+
+        var limpaFoto2 = function (event) {
+            console.warn('Entrou limpa foto');
+            document.getElementById('output2').src = "#";
+            document.getElementById('output2').hidden = true;
+        };
+
+        var loadFile3 = function (event) {
+            console.warn('Entrou carrega foto');
+            var reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById('output3').hidden = false;
+                var output3 = document.getElementById('output3');
+                output3.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+
+        var limpaFoto3 = function (event) {
+            console.warn('Entrou limpa foto');
+            document.getElementById('output3').src = "#";
+            document.getElementById('output3').hidden = true;
+        };
+
+        var loadFile4 = function (event) {
+            console.warn('Entrou carrega foto');
+            var reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById('output4').hidden = false;
+                var output4 = document.getElementById('output4');
+                output4.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+
+        var limpaFoto4 = function (event) {
+            console.warn('Entrou limpa foto');
+            document.getElementById('output4').src = "#";
+            document.getElementById('output4').hidden = true;
+        };
+    </script>
+}

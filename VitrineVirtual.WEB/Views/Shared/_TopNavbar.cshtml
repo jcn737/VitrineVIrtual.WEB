@@ -1,0 +1,72 @@
+﻿<div class="row border-bottom">
+    <div class="container-fluid" style="background-color: #3872a2">
+        <span class="aligncenter">
+            <img class="Image of Seal" src="~/img/vvLogo.png" />
+        </span>
+    </div>
+
+    <nav class="navbar navbar-static-top" role="navigation" style="background-color:#3872a2">
+        <ul class="nav navbar-nav" style="background-color:#3872a2">
+            <li>@Html.ActionLink("Home", "Index", "Home", null, new { @style = "color:whitesmoke" })</li>
+            @if (Request.IsAuthenticated && (User.IsInRole("Administrador") || User.IsInRole("Logista")))
+            {
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:whitesmoke">Logista <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Logista", "Tabs", "CadastroProdutoLoja")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Cadastro Produto", "Index", "CadastroProdutoLoja")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Faturamento", "Index", "FaturamentoLoja")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Relatórios", "Index", "RelatorioLoja")</li>
+                    </ul>
+                </li>
+            }
+
+            @if (Request.IsAuthenticated && (User.IsInRole("Administrador") || User.IsInRole("Revendedor")))
+            {
+                <li>@Html.ActionLink("Revendedor", "Index", "Revendedor", null, new { @style = "color:whitesmoke" })</li>
+            }
+            <li>@Html.ActionLink("Catálogo", "Index", "CatalogoProdutoLoja", null, new { @style = "color:whitesmoke" })</li>
+            <li>@Html.ActionLink("Promocões", "Index", "Promocoes", null, new { @style = "color:whitesmoke" })</li>
+            @if (Request.IsAuthenticated && User.IsInRole("Administrador"))
+            {
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:whitesmoke">Gestão Portal <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Gerenciamento Usuários", "Index", "Manage")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Cadastro de Usuários", "Index", "CUAUsuarios")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Cadastro de Lojas", "Index", "CUAEmpresas")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Permissões Usuários", "EditUserRoles", "Account")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Faturamento", "Index", "FaturamentoPortal")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Relatórios", "Index", "RelatorioPortal")</li>
+                        <li class="nav-divider"></li>
+                        <li>@Html.ActionLink("Estatisticas PagSeguro", "Index", "EstatisticasPagSeguro")</li>
+                    </ul>
+                </li>
+            }
+            
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li style="color:whitesmoke"><b>Olá</b>    @User.Identity.Name</li>
+            <li style="vertical-align:">
+                <a href="@Url.Action("LogOut", "Account")" style="color:whitesmoke">
+                    <i class="fa fa-sign-out" style="color:whitesmoke"></i> Sair
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".dropdown-toggle").dropdown();
+    });
+</script>
